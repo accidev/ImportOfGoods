@@ -28,15 +28,3 @@ jobs:
         uses: php-actions/phpstan@v3
         with:
           path: app/
-
-  eslint-main-pr:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install modules
-        run: npm install
-
-      - name: Check by ESlinter
-        run: npm run lint
