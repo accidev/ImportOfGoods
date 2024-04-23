@@ -1,0 +1,49 @@
+name: Run main-pr
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  phplint-main-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check by PHP linter
+        uses: fxpw/PHP-Lint-php8.3@master
+
+  phpstan-main-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Load versions from file
+        run: |
+          set -a
+          . ./.github/scripts/versions.env
+          set +a
+          echo "COMPOSER_VER=$COMPOSER_VER" >> $GITHUB_ENV
+
+      - name: Install Composer run
+        run: composer install
+
+      - name: PHPStan (php-actions)
+        uses: php-actions/phpstan@v3
+        with:
+          path: app/
+
+  eslint-main-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install modules
+        run: npm install
+
+      - name: Check by ESlinter
+        run: npm run lint
