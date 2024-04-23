@@ -21,13 +21,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Load versions from file
-        run: |
-          set -a
-          . ./.github/scripts/versions.env
-          set +a
-          echo "COMPOSER_VER=$COMPOSER_VER" >> $GITHUB_ENV
-
       - name: Install Composer run
         run: composer install
 
