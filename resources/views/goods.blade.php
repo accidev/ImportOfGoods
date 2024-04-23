@@ -3,8 +3,11 @@
 @section("content")
     <h1>Карточки товаров</h1>
 
-    <div class="grid-container">
-        @foreach($goods as $good)
+    @if(!Schema::hasTable('goods'))
+        <h1 style="color: red">Таблица "Товары" не создана</h1>
+    @else
+        <div class="grid-container">
+            @foreach($goods as $good)
                 <a href="{{ route('good', ['id' => $good->id]) }}" class="card">
                     <div class="card-body">
                         @for($i = 0; $i < count($images); $i++)
@@ -25,6 +28,9 @@
                         </p>
                     </div>
                 </a>
-        @endforeach
-    </div>
+            @endforeach
+        </div>
+    @endif
+
+
 @endsection

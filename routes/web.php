@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\GoodController;
 use App\Http\Controllers\ImportController;
-use App\Imports\GoodsImport;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +19,15 @@ Route::get('/', function () {
     return view('home', ['title' => 'Home']);
 })->name('home');
 
+// Страница загрузки файла
 Route::get('upload_file', [GoodController::class, 'uploadFile'])->name('upload.file');
+
+// Импорт файла
+Route::post('import', [ImportController::class, 'importFile'])->name('import.file');
+
+// Все товары
 Route::get('goods', [GoodController::class,'index'])->name('goods');
+
+// Карточка товара
 Route::get('good/{id}', [GoodController::class, 'show'])->name('good');
-Route::post('import', [ImportController::class, 'importExcel'])->name('import.file');
+

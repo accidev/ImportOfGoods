@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AdditionalField;
 use App\Models\Good;
 use App\Models\Image;
-
+use Illuminate\Support\Facades\Schema;
 class GoodController extends Controller
 {
     /**
@@ -15,10 +15,12 @@ class GoodController extends Controller
      */
     public function index()
     {
-        $goods= Good::all();
+        if (!Schema::hasTable('goods')) {
+            return view('goods');
+        }
 
+        $goods = Good::all();
         $additionalFields = AdditionalField::all();
-
         $images = Image::all();
 
         return view('goods', [
